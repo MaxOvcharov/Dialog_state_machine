@@ -33,6 +33,7 @@ class DialogStateMach:
         self.machine.add_transition(trigger='back_to_menu', source='*', dest='menu',
                                     before='finalize_current_state_fun')
 
+        # ************************************************************************************
         # Go to the first branch of dialog step 1.1.
         self.machine.add_transition(trigger='go_step_1.1', source='menu', dest='step_1.1',
                                     after='go_branch1_step1_fun')
@@ -45,6 +46,7 @@ class DialogStateMach:
         self.machine.add_transition(trigger='go_step_1.3', source='step_1.2', dest='step_1.3',
                                     after='go_branch1_step3_fun')
 
+        # ************************************************************************************
         # Go to the second branch of dialog step 2.1.
         self.machine.add_transition(trigger='go_step_2.1', source='menu', dest='step_2.1',
                                     after='go_branch2_step1_fun')
@@ -57,6 +59,19 @@ class DialogStateMach:
         self.machine.add_transition(trigger='go_step_2.3', source='step_2.2', dest='step_2.3',
                                     after='go_branch2_step3_fun')
 
+        # ************************************************************************************
+        # Go to the third branch of dialog step 3.1.
+        self.machine.add_transition(trigger='go_step_3.1', source='menu', dest='step_3.1',
+                                    after='go_branch3_step1_fun')
+
+        # Go to the third branch of dialog step 3.2.
+        self.machine.add_transition(trigger='go_step_3.2', source='step_3.1', dest='step_3.2',
+                                    after='go_branch3_step2_fun')
+
+        # Go to the third branch of dialog step 3.3.
+        self.machine.add_transition(trigger='go_step_3.3', source='step_3.2', dest='step_3.3',
+                                    after='go_branch3_step3_fun')
+
         # self.machine.add_transition('clean_up', 'sweaty', 'asleep', conditions=['is_exhausted'])
 
     def start_dialog_fun(self):
@@ -67,6 +82,8 @@ class DialogStateMach:
         """ Finalize current state job before trigger state """
         print('FINALIZE CURRENT STATE JOB')
 
+    # ************************************************************************************
+
     def go_branch1_step1_fun(self):
         print("NOW YOU ARE ON STATE 1.1")
 
@@ -76,6 +93,8 @@ class DialogStateMach:
     def go_branch1_step3_fun(self):
         print("NOW YOU ARE ON STATE 1.3")
 
+    # ************************************************************************************
+
     def go_branch2_step1_fun(self):
         print("NOW YOU ARE ON STATE 2.1")
 
@@ -84,3 +103,14 @@ class DialogStateMach:
 
     def go_branch2_step3_fun(self):
         print("NOW YOU ARE ON STATE 2.3")
+
+    # ************************************************************************************
+
+    def go_branch3_step1_fun(self):
+        print("NOW YOU ARE ON STATE 3.1")
+
+    def go_branch3_step2_fun(self):
+        print("NOW YOU ARE ON STATE 3.2")
+
+    def go_branch3_step3_fun(self):
+        print("NOW YOU ARE ON STATE 3.3")

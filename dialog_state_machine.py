@@ -1,12 +1,13 @@
+# -*- coding: utf-8 -*-
 from transitions import Machine
-import random
+
+from settings import logger
 
 
-class DialogStateMach:
+class DialogStateMach(object):
     """
         Simple example of dialog constructor using State Machine.
     """
-
     # Declare all state of dialog
     states = ['start', 'menu',
               'step_1.1', 'step_1.2', 'step_1.3',
@@ -76,7 +77,7 @@ class DialogStateMach:
 
     def start_dialog_fun(self):
         """ Send start command into dialog """
-        print('START DIALOG')
+        logger.debug('START DIALOG')
 
     def finalize_current_state_fun(self):
         """ Finalize current state job before trigger state """
@@ -85,32 +86,43 @@ class DialogStateMach:
     # ************************************************************************************
 
     def go_branch1_step1_fun(self):
-        print("NOW YOU ARE ON STATE 1.1")
+        logger.debug("NOW YOU ARE ON STATE 1.1")
 
     def go_branch1_step2_fun(self):
-        print("NOW YOU ARE ON STATE 1.2")
+        logger.debug("NOW YOU ARE ON STATE 1.2")
 
     def go_branch1_step3_fun(self):
-        print("NOW YOU ARE ON STATE 1.3")
+        logger.debug("NOW YOU ARE ON STATE 1.3")
 
     # ************************************************************************************
 
     def go_branch2_step1_fun(self):
-        print("NOW YOU ARE ON STATE 2.1")
+        logger.debug("NOW YOU ARE ON STATE 2.1")
 
     def go_branch2_step2_fun(self):
-        print("NOW YOU ARE ON STATE 2.2")
+        logger.debug("NOW YOU ARE ON STATE 2.2")
 
     def go_branch2_step3_fun(self):
-        print("NOW YOU ARE ON STATE 2.3")
+        logger.debug("NOW YOU ARE ON STATE 2.3")
 
     # ************************************************************************************
 
     def go_branch3_step1_fun(self):
-        print("NOW YOU ARE ON STATE 3.1")
+        logger.debug("NOW YOU ARE ON STATE 3.1")
 
     def go_branch3_step2_fun(self):
-        print("NOW YOU ARE ON STATE 3.2")
+        logger.debug("NOW YOU ARE ON STATE 3.2")
 
     def go_branch3_step3_fun(self):
-        print("NOW YOU ARE ON STATE 3.3")
+        logger.debug("NOW YOU ARE ON STATE 3.3")
+
+
+def main():
+    bot_dialog = DialogStateMach(dialog_name='Telegram_bot')
+    logger.debug(bot_dialog.state)
+    bot_dialog.trigger('start_dialog')
+    logger.debug(bot_dialog.state)
+
+
+if __name__ == '__main__':
+    main()

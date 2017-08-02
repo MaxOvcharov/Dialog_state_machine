@@ -20,7 +20,8 @@ class DialogStateMach(object):
         self.dialog_name = dialog_name
 
         # Initialize the state machine
-        self.machine = Machine(model=self, states=DialogStateMach.states, initial='start')
+        self.machine = Machine(model=self, states=DialogStateMach.states, initial='start',
+                               after_state_change='save_state_to_db')
 
         # Add some transitions. We could also define these using a static list of
         # dictionaries, as we did with states above, and then pass the list to
@@ -116,12 +117,21 @@ class DialogStateMach(object):
     def go_branch3_step3_fun(self):
         logger.debug("NOW YOU ARE ON STATE 3.3")
 
+    # ************************************************************************************
+
+    def save_state_to_db(self):
+        logger.debug("Save every state into PostgreSQL or Redis\n")
+
 
 def main():
     bot_dialog = DialogStateMach(dialog_name='Telegram_bot')
-    logger.debug(bot_dialog.state)
+    logger.debug("CURRENT STATE: {0}".format(bot_dialog.state))
     bot_dialog.trigger('start_dialog')
-    logger.debug(bot_dialog.state)
+
+    logger.debug("CURRENT STATE: {0}".format(bot_dialog.state))
+    bot_dialog.trigger('go_step_1.1')
+
+    logger.debug("CURRENT STATE: {0}".format(bot_dialog.state))
 
 
 if __name__ == '__main__':

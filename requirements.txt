@@ -1,2 +1,4 @@
+aiopg==0.13.0
+psycopg2==2.7.3
 six==1.10.0
 transitions==0.5.3

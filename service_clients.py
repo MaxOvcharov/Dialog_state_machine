@@ -7,13 +7,15 @@ class PostgreSQLClient:
     def __init__(self, loop, conf):
         self.loop = loop
         self.conf = conf
+        self.pg = None
 
     @classmethod
-    async def connect(cls):
-        # TODO CREATE ENTRY POINT FOR CLIENT FACTORY
-        pass
+    async def connect(cls, **options):
+        self = cls(**options)
+        await self.init_connection()
+        return self
 
-    async def _connection(self):
+    async def init_connection(self):
         self.pg = await aiopg.sa.create_engine(
             database=self.conf['database'],
             user=self.conf['user'],
@@ -32,5 +34,5 @@ class PostgreSQLClient:
 async def pg_client_factory(loop, conf, client=PostgreSQLClient):
     """ Abstract PosgreSQL client factory """
     pg_client = client(loop, conf)
-    pg = await pg_client.connect(loop, conf)
+    pg = await pg_client.connect(loop=loop, conf=conf)
     return pg
